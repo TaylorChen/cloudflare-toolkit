@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "书签收藏助手",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "基于 Cloudflare KV 的云端书签管理工具,快速收藏和管理您的网页书签",
     "permissions": [
         "activeTab",

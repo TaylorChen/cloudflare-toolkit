@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadCurrentPage()
     await loadBookmarks()
     await loadUserId()
+    await loadWindowSize()
 
     // 事件监听
     saveForm.addEventListener('submit', handleSave)
@@ -51,6 +52,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     btnCopyUserId.addEventListener('click', copyUserId)
     btnImportUserId.addEventListener('click', importUserIdHandler)
     btnExportData.addEventListener('click', exportData)
+
+    // 窗口尺寸按钮
+    initSizeButtons()
 })
 
 // ==================== 加载当前页面信息 ====================
@@ -83,6 +87,13 @@ async function handleSave(e) {
 
     if (!url || !title) {
         showNotification('请填写标题', 'error')
+        return
+    }
+
+    // 检查是否已收藏该网址
+    const duplicateBookmark = allBookmarks.find(b => b.url === url)
+    if (duplicateBookmark) {
+        showNotification('该网址已收藏!', 'warning')
         return
     }
 
@@ -597,38 +608,100 @@ document.head.appendChild(style)
 
 // ==================== API Key 管理 ====================
 
-async function loadApiKey () {
-  try {
-    const response = await sendMessage({ action: 'getApiKey' })
-    if (response.success) {
-      apiKey.value = response.apiKey || 'dev-test-key-12345'
+async function loadApiKey() {
+    try {
+        const response = await sendMessage({ action: 'getApiKey' })
+        if (response.success) {
+            apiKey.value = response.apiKey || 'dev-test-key-12345'
+        }
+    } catch (error) {
+        console.error('加载 API Key 失败:', error)
+        apiKey.value = ''
     }
-  } catch (error) {
-    console.error('加载 API Key 失败:', error)
-    apiKey.value = ''
-  }
 }
 
-async function saveApiKey () {
-  const key = apiKey.value.trim()
+async function saveApiKey() {
+    const key = apiKey.value.trim()
 
-  if (!key) {
-    showNotification('请输入 API Key', 'error')
-    return
-  }
-
-  try {
-    const response = await sendMessage({
-      action: 'setApiKey',
-      apiKey: key
-    })
-
-    if (response.success) {
-      showNotification('API Key 保存成功!', 'success')
-    } else {
-      showNotification(`保存失败: ${response.error}`, 'error')
+    if (!key) {
+        showNotification('请输入 API Key', 'error')
+        return
     }
-  } catch (error) {
-    showNotification(`保存失败: ${error.message}`, 'error')
-  }
+
+    try {
+        const response = await sendMessage({
+            action: 'setApiKey',
+            apiKey: key
+        })
+
+        if (response.success) {
+            showNotification('API Key 保存成功!', 'success')
+        } else {
+            showNotification(`保存失败: ${response.error}`, 'error')
+        }
+    } catch (error) {
+        showNotification(`保存失败: ${error.message}`, 'error')
+    }
+}
+
+// ==================== 窗口尺寸管理 ====================
+
+function initSizeButtons() {
+    const sizeButtons = document.querySelectorAll('.btn-size')
+
+    sizeButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const size = btn.dataset.size
+            setWindowSize(size)
+        })
+    })
+}
+
+async function loadWindowSize() {
+    try {
+        const result = await chrome.storage.sync.get(['windowSize'])
+        const size = result.windowSize || 'standard'
+        applyWindowSize(size)
+    } catch (error) {
+        console.error('加载窗口尺寸失败:', error)
+        applyWindowSize('standard')
+    }
+}
+
+async function setWindowSize(size) {
+    try {
+        await chrome.storage.sync.set({ windowSize: size })
+        applyWindowSize(size)
+        showNotification(`已切换到${getSizeName(size)}尺寸`, 'success')
+    } catch (error) {
+        console.error('保存窗口尺寸失败:', error)
+        showNotification('保存尺寸设置失败', 'error')
+    }
+}
+
+function applyWindowSize(size) {
+    // 移除所有尺寸类
+    document.body.classList.remove('size-compact', 'size-standard', 'size-spacious')
+
+    // 添加新的尺寸类
+    document.body.classList.add(`size-${size}`)
+
+    // 更新按钮状态
+    const sizeButtons = document.querySelectorAll('.btn-size')
+    sizeButtons.forEach(btn => {
+        if (btn.dataset.size === size) {
+            btn.classList.add('active')
+        } else {
+            btn.classList.remove('active')
+        }
+    })
+}
+
+function getSizeName(size) {
+    const names = {
+        compact: '紧凑',
+        standard: '标准',
+        spacious: '宽敞'
+    }
+    return names[size] || '标准'
 }

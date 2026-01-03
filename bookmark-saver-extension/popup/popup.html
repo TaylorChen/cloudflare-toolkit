@@ -164,6 +164,31 @@
         </div>
 
         <div class="setting-group">
+          <label class="setting-label">窗口尺寸</label>
+          <div class="size-options">
+            <button class="btn-size" data-size="compact">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <rect x="3" y="3" width="18" height="18" rx="2" stroke-width="2" />
+              </svg>
+              紧凑
+            </button>
+            <button class="btn-size active" data-size="standard">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <rect x="3" y="3" width="18" height="18" rx="2" stroke-width="2" />
+              </svg>
+              标准
+            </button>
+            <button class="btn-size" data-size="spacious">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <rect x="3" y="3" width="18" height="18" rx="2" stroke-width="2" />
+              </svg>
+              宽敞
+            </button>
+          </div>
+          <p class="text-hint">选择适合您的显示尺寸</p>
+        </div>
+
+        <div class="setting-group">
           <label class="setting-label">数据管理</label>
           <button class="btn-danger" id="btnExportData">导出所有书签 (JSON)</button>
         </div>

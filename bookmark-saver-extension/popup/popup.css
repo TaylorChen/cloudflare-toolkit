@@ -40,15 +40,16 @@
 }
 
 html {
-  width: 500px;
+  min-width: 380px;
+  max-width: 800px;
 }
 
 body {
-  width: 500px;
-  min-width: 500px;
-  max-width: 500px;
-  min-height: 500px;
-  max-height: 600px;
+  min-width: 380px;
+  max-width: 800px;
+  width: 600px;
+  min-height: 400px;
+  max-height: 800px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
   font-size: 14px;
   line-height: 1.5;
@@ -62,9 +63,8 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-width: 500px;
   height: 100vh;
-  max-height: 600px;
+  max-height: 100vh;
 }
 
 /* ==================== 头部 ==================== */
@@ -582,6 +582,97 @@ body {
 
 .bookmark-item {
   animation: fadeIn 0.2s ease-out;
+}
+
+/* ==================== 窗口尺寸选项 ==================== */
+
+.size-options {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-xs);
+}
+
+.btn-size {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-md);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-light);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-size:hover {
+  background: var(--color-bg-hover);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.btn-size.active {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+.btn-size svg {
+  flex-shrink: 0;
+}
+
+/* ==================== 窗口尺寸预设 ==================== */
+
+/* 紧凑尺寸 */
+body.size-compact {
+  width: 450px;
+  min-height: 350px;
+}
+
+body.size-compact .left-panel {
+  min-width: 160px;
+  max-width: 180px;
+}
+
+body.size-compact .section-title {
+  font-size: 12px;
+}
+
+body.size-compact .form-input,
+body.size-compact .form-textarea {
+  font-size: 12px;
+  padding: 6px 10px;
+}
+
+/* 标准尺寸（默认） */
+body.size-standard {
+  width: 600px;
+  min-height: 400px;
+}
+
+/* 宽敞尺寸 */
+body.size-spacious {
+  width: 750px;
+  min-height: 500px;
+}
+
+body.size-spacious .left-panel {
+  min-width: 220px;
+  max-width: 280px;
+}
+
+body.size-spacious .section-title {
+  font-size: 15px;
+}
+
+body.size-spacious .form-input,
+body.size-spacious .form-textarea {
+  font-size: 14px;
+  padding: 10px 14px;
 }
 
 /* ==================== 响应式 ==================== */
