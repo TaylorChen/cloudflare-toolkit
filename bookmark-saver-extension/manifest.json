@@ -1,0 +1,40 @@
+{
+    "manifest_version": 3,
+    "name": "书签收藏助手",
+    "version": "1.0.0",
+    "description": "基于 Cloudflare KV 的云端书签管理工具,快速收藏和管理您的网页书签",
+    "permissions": [
+        "activeTab",
+        "contextMenus",
+        "storage",
+        "notifications"
+    ],
+    "host_permissions": [
+        "https://*.workers.dev/*"
+    ],
+    "background": {
+        "service_worker": "background/service-worker.js"
+    },
+    "action": {
+        "default_popup": "popup/popup.html",
+        "default_icon": {
+            "16": "assets/icon16.png",
+            "48": "assets/icon48.png",
+            "128": "assets/icon128.png"
+        }
+    },
+    "icons": {
+        "16": "assets/icon16.png",
+        "48": "assets/icon48.png",
+        "128": "assets/icon128.png"
+    },
+    "commands": {
+        "save-bookmark": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+D",
+                "mac": "Command+Shift+D"
+            },
+            "description": "快速收藏当前页面"
+        }
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "account_id": "your-account-id",
+    "name": "bookmark-saver",
+    "main": "bookmark-saver.js",
+    "compatibility_date": "2025-09-30",
+    "no_bundle": false,
+    "minify": true,
+    "routes": [
+        {
+            "pattern": "your-domain.com/*",
+            "zone_name": "your-domain.com"
+        }
+    ],
+    "kv_namespaces": [
+        {
+            "binding": "KV",
+            "id": "your-kv-namespace-id"
+        }
+    ],
+    "vars": {
+        "API_KEY": "your-secret-api-key-here-change-in-production"
+    }
+}
