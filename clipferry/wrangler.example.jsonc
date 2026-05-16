@@ -1,0 +1,21 @@
+{
+  "account_id": "your-account-id",
+  "name": "clipferry",
+  "main": "src/worker.js",
+  "compatibility_date": "2025-09-30",
+  "no_bundle": false,
+  "minify": true,
+  "workers_dev": true,
+  "routes": [
+    {
+      "pattern": "clip.example.com",
+      "custom_domain": true
+    }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "KV",
+      "id": "your-kv-namespace-id"
+    }
+  ]
+}

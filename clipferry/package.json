@@ -1,0 +1,17 @@
+{
+  "name": "clipferry",
+  "version": "0.1.0",
+  "description": "A lightweight cross-device clipboard ferry built on Cloudflare Workers.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "~4.49.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
